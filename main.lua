@@ -36,7 +36,12 @@ function love.load()
 	y = 0
 	z = 1
 	scale = 1
-
+	
+	-- create a regular world
+	objects = {}
+	
+	physWorld = love.physics.newWorld(0, 0, true)
+	
 	-- create light world
 	lightWorld = LightWorld({
 		ambient = {55,55,55},
@@ -69,12 +74,11 @@ function love.load()
 		local rect = lightWorld:newRectangle(x-TILE_SIZE, y-TILE_SIZE, width, height)
 		rect:setNormalMap(image_normal, width, height)
 		
-		--local body = love.physics.newBody(phys_world, x, y, 0, 0)
-		--local shape = love.physics.newRectangleShape(body, 0, 0, width, height)
+		local body = love.physics.newBody(physWorld, x, y, "static")
+		local shape = love.physics.newRectangleShape(width, height)
+		local fixture = love.physics.newFixture(body, shape, 1)
 
-		--shape:setFriction(0)
-
-		--table.insert(wall_rects, {body = body, shape = shape})
+		table.insert(objects, {body = body, shape = shape, fixture = fixture})
 	end
 	
 	--[[
@@ -143,6 +147,13 @@ function love.draw()
 		map:draw()
 	end)
 	love.graphics.pop()
+	for k,v in ipairs(objects) do
+		local points = {v.body:getWorldPoints(v.shape:getPoints())}
+		table.insert(points, points[1])
+		table.insert(points, points[2])
+		-- repeat the last points because 
+		love.graphics.line(points)
+	end
 end
 
 function print_r ( t )  

@@ -1,4 +1,6 @@
 -- from: https://love2d.org/wiki/TileMerging
+-- consider: https://github.com/mikolalysenko/rectangle-decomposition
+-- hulls you say: http://www.datagenetics.com/blog/march12014/index.html
 local rectdec = {}
 
 function rectdec:is_wall_f(x, y)
