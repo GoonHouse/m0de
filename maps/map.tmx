@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="32" tileheight="32" backgroundcolor="#808080" nextobjectid="6">
+ <tileset firstgid="1" name="base" tilewidth="32" tileheight="32">
+  <image source="../resources/graphics/border.bmp" width="32" height="32"/>
+  <tile id="0">
+   <properties>
+    <property name="collidable" value="true"/>
+    <property name="normal_image" value="border_NRM.png"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="25" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBxGmFaAVDvIcRO5/qCVu8gNX1zqiTWLmPgdCnYQAwbSDmqCUTvIs4OWGAABugCY
+  </data>
+ </layer>
+</map>
