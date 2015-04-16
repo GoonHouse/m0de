@@ -1,159 +1,64 @@
--- ruin everything
-io.stdout:setvbuf("no")
---require('mobdebug').start()
-	
--- https://github.com/tanema/light_world.lua
---require("lib.core.camera")
---require("lib.core.world")
---Gui = --require()
+-- include
+flux	 = require "lib.flux"
+cron     = require 'lib.cron'
+Menu     = require 'lib.menu'
+ProFi    = require 'lib.ProFi'
+lume     = require 'lib.lume'
+lurker   = require 'lib.lurker'
 
---animations library
+-- game & gamestate requires
+local Game = require 'game'
 
--- entities like players, enemies, ...
---require("lib.entities.player")
+-- global game states
+require 'gamestates.loading'
+require 'gamestates.main_menu'
+require 'gamestates.options_menu'
+require 'gamestates.options_sound'
+require 'gamestates.options_keyboard'
+require 'gamestates.ingame'
 
--- game states
---Gamestate = require('lib.vendor.hump.gamestate')
---require("lib.states.game")
+-- global Ressources
+_menu_ = { image = {}, texture = {}, sound = {} }
+_ingame_ = { image = {}, texture = {}, sound = {} }
 
---[[
-	write some helper methods for STI to filter maps with a function and
-	transform it accordingly?
-]]
+-- game instance
+local testgame = nil	-- main game object
 
--- Example: STI Example
-local LightWorld = require 'libs.lightworld'
-local sti = require 'libs.sti'
-local ProFi = require 'libs.ProFi'
-local rectdec = require 'libs.rectdec'
-
+-- basic LÖVE callbacks used on this game; add more as needed
 function love.load()
-	--love._openConsole()
-	--Gamestate.switch(game)
 	ProFi:start()
-	print("zebras")
-	x = 0
-	y = 0
-	z = 1
-	scale = 1
-	
-	-- create a regular world
-	objects = {}
-	
-	physWorld = love.physics.newWorld(0, 0, true)
-	
-	-- create light world
-	lightWorld = LightWorld({
-		ambient = {55,55,55},
-		shadowBlur = 0.0
-	})
-
-	map = sti.new("maps/map")
-	image_normal = love.graphics.newImage("resources/graphics/border_NRM.png")
-
-	-- create light
-	lightMouse = lightWorld:newLight(0, 0, 255, 127, 63, 300)
-	lightMouse:setGlowStrength(0.3)
-
-	-- performance is immensely fucked here, use some smangy rectangles holmes
-	-- https://github.com/mikolalysenko/rectangle-decomposition
-	
-	rectdec:setMap(map.layers[1])
-	local rectangles = rectdec:parseMap()
-	local TILE_SIZE = 32
-	for _, r in ipairs(rectangles) do
-		print("rectangle #", _)
-		local start_x = r.start_x * TILE_SIZE
-		local start_y = r.start_y * TILE_SIZE
-		local width = (r.end_x - r.start_x + 1) * TILE_SIZE
-		local height = (r.end_y - r.start_y + 1) * TILE_SIZE
-
-		local x = start_x + (width / 2)
-		local y = start_y + (height / 2)
-		
-		local rect = lightWorld:newRectangle(x-TILE_SIZE, y-TILE_SIZE, width, height)
-		rect:setNormalMap(image_normal, width, height)
-		
-		local body = love.physics.newBody(physWorld, x, y, "static")
-		local shape = love.physics.newRectangleShape(width, height)
-		local fixture = love.physics.newFixture(body, shape, 1)
-
-		table.insert(objects, {body = body, shape = shape, fixture = fixture})
-	end
-	
-	--[[
-	-- if you want really laggy junk, use this
-	for iy, row in ipairs(map.layers[1].data) do
-		for ix, col in ipairs(row) do
-			if col then
-				local sx, sy = map:convertTileToScreen(ix,iy)
-				local rect = lightWorld:newRectangle(sx-col.width/2, sy-col.height/2, col.width, col.height)
-				rect:setNormalMap(image_normal, col.width, col.height)
-			end
-		end
-	end
-	]]
-end
-
-function love.update(dt)
-	--Gamestate.update(dt)
-	love.window.setTitle("Light vs. Shadow Engine (FPS:" .. love.timer.getFPS() .. ")")
-
-	if love.keyboard.isDown("down") then
-		y = y - dt * 200
-	elseif love.keyboard.isDown("up") then
-		y = y + dt * 200
-	end
-
-	if love.keyboard.isDown("right") then
-		x = x - dt * 200
-	elseif love.keyboard.isDown("left") then
-		x = x + dt * 200
-	end
-
-	if love.keyboard.isDown("-") then
-		scale = scale - 0.01
-	elseif love.keyboard.isDown("=") then
-		scale = scale + 0.01
-	end
-
-	map:update(dt)
-	lightWorld:update(dt)
-	lightMouse:setPosition((love.mouse.getX() - x)/scale, (love.mouse.getY() - y)/scale, z)
-end
-
-function love.mousepressed(x, y, c)
-	--Gamestate.mousepressed(x, y, c)
-	if c == "wu" then
-	z = z + 1
-	elseif c == "wd" then
-	z = z - 1
-	end
-end
-
-function love.keypressed(key, code)
-	--Gamestate.keypressed(key, code)
+	testgame = Game:new() -- initialize game
 end
 
 function love.draw()
-	--Gamestate.draw()
-	lightWorld:setTranslation(x, y, scale)
-	love.graphics.push()
-	love.graphics.translate(x, y)
-	love.graphics.scale(scale)
-	lightWorld:draw(function()
-		love.graphics.setColor(255, 255, 255)
-		love.graphics.rectangle("fill", -x/scale, -y/scale, love.graphics.getWidth()/scale, love.graphics.getHeight()/scale)
-		map:draw()
-	end)
-	love.graphics.pop()
-	for k,v in ipairs(objects) do
-		local points = {v.body:getWorldPoints(v.shape:getPoints())}
-		table.insert(points, points[1])
-		table.insert(points, points[2])
-		-- repeat the last points because 
-		love.graphics.line(points)
-	end
+	testgame:draw()
+end
+
+function love.update(dt)
+	lurker.update(dt)
+	cron.update(dt)
+	flux.update(dt)
+	testgame:update(dt)
+end
+
+function love.keypressed(key, code)
+	testgame:keypressed(key, code)
+end
+
+function love.keyreleased(key, code)
+	testgame:keyreleased(key, code)
+end
+
+function love.mousepressed(x,y,button)
+	testgame:mousepressed(x,y,button)
+end
+
+function love.mousereleased(x,y,button)
+	testgame:mousereleased(x,y,button)
+end
+
+function love.quit()
+	testgame:quit()
 end
 
 function print_r ( t )  

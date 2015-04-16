@@ -1,4 +1,7 @@
 -- from: https://love2d.org/wiki/TileMerging
+
+-- additionally: https://love2d.org/forums/viewtopic.php?p=179044#p179044
+
 -- consider: https://github.com/mikolalysenko/rectangle-decomposition
 -- hulls you say: http://www.datagenetics.com/blog/march12014/index.html
 local rectdec = {}
