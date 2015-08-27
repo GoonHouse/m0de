@@ -12,7 +12,9 @@ TEsound.music=true
 
 function Game:initialize()
 	-- menu ressources
-	self:gotoState('Loading', 'MainMenu', require( 'subclass/menuressources' ), _menu_ )
+	--self:gotoState('
+	self:gotoState('TestBed')
+	--self:gotoState('Loading', 'MainMenu', require( 'subclass/menuressources' ), _menu_ )
 end
 
 -- Include the methods available in all states here

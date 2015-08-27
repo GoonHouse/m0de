@@ -403,7 +403,6 @@ function lume.hotswap(modname)
   local updated = {}
   local function update(old, new)
     if updated[old] then return end
-    _print("lh", old, new)
     if not old then
         old = new
     end

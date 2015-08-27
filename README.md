@@ -1,87 +1,50 @@
-m0de
-====
+# m0de
+This thing is a mess meant to replace [Marin0SE](https://github.com/GoonHouse/Marin0SE) and all that fancy jazz. It's supposed to right the wrongs of man and solve original sin. Or at least not be a complete failed rewrite if Mari0. Who knows.
 
-Rev up those fryers!
+# todo
+Sometimes I forget what I'm doing, this is here to compensate for that.
+* get object serialization up and going with [lady](https://github.com/gvx/Lady) if it isn't merged into binser first.
+* maybe use meshes for box2d debug drawing? lines are crazy, yo.
+* make the networking model update its own system
+* make the networking components entities like the rest of them
+* anything that contains __index__.lua gets mounted to root
+* main menu routing? who knows
 
-screenshots
-===========
+# very done
+* get rid of tserial and throw it in the lake, probably use [binser](https://github.com/bakpakin/binser)
+	* used binser in hopes that the promise of per-class object serialization will kick ass
 
+# screenshots
 ![example-image](http://i.imgur.com/gn8KT54.png)
 
-note
-====
+# note
+This was based on the [love2d_gametemplate](https://github.com/SiENcE/love2d_gametemplate) repo, so shouts to [@SiENcE](https://github.com/SiENcE).
+I also BORROWED some stuffs from [CommandoKibbles](https://github.com/bakpakin/CommandoKibbles) to get my bearings with [tiny-ecs](https://github.com/bakpakin/tiny-ecs)
 
-Everything below this line is verbatim from the [love2d_gametemplate](https://github.com/SiENcE/love2d_gametemplate) repo, so shouts to [@SiENcE](https://github.com/SiENcE)
+# dev notes
+some things to keep me sane
 
-love2d_gametemplate
-===================
-
-This is a gametemplate for LÖVE engine using middleclass, stateful, love-loader, TESound and cron libraries.
-
-The base of this template is copied from kikito.
-
-Features
-==========
-- The aim of this template is to seperate ressource loading from scenes.
-- You can easily develop with seperate Image-Files and later merge them into an Texture-Atlas, without changing your code :-) !
-
-Template description
-==========
-- A ressource reference is submitted to a Loading State and the ressources are loaded via 'love-loader' library.
-- Loading of ressources is visualised via 'love-loader' library.
-- After all ressources are loaded, the Loading-State switches to the Menu-Sate.
-- All ressources are accessed via the global variable 'media'.
-- All ressources share the same naming ... so you can overwrite existing ones using the same name.
-- You can add additional ressources during any state switch.
-- 'TESound' library is enhanced to also play sounddata.
-- Tweening library 'flux' is included.
-
-Sample
-==========
-definition of ressources using single image files:
-```
-local res = {}
-res.images = {
-	{'left-hand-climber-hi', 'media/images/left-hand-climber-hi.png' },
-	{'left-hand-climber-hi2', 'media/images/left-hand-climber-hi2.png' },
-	{'left-hand-climber-hi3', 'media/images/left-hand-climber-hi3.png' },
-	{'textureatlas', 'media/images/textureatlas.png',
-		quads = {
-				['A_left-hand-climber-hi'] = { 2, 2, 402, 598, 406, 961 },
-				['A_left-hand-climber-hi2'] = { 2, 602, 240, 357, 406, 961 },
-				['A_left-hand-climber-hi3'] = { 244, 602, 120, 179, 406, 961 },
-		}
+## properties to expect from tiled:
+```lua
+{
+	name = "",
+	id = 9,
+	
+	properties = {
+		propertyname = "every property value is a string",
 	},
-```
-
-or using a Texture-Atlas:
-```
-local res = {}
-res.images = {
-	{'textureatlas', 'media/images/textureatlas.png',
-		quads = {
-				['left-hand-climber-hi'] = { 2, 2, 402, 598, 406, 961 },
-				['left-hand-climber-hi2'] = { 2, 602, 240, 357, 406, 961 },
-				['left-hand-climber-hi3'] = { 244, 602, 120, 179, 406, 961 },
-		}
+	
+	shape = "rectangle",
+	rectangle = {
+		{x=1200,y=1008},
+		{x=1264,y=1264},
+		...
 	},
+	
+	x = 1200,
+	y = 1008,
+	rotation = 0,
+	height = 64,
+	width = 64,
+}
 ```
-
-same code using it:
-```
-media.quads['left-hand-climber-hi']:draw(0,0)
-media.quads['left-hand-climber-hi3']:draw(love.mouse.getX(), love.mouse.getY())
-```
-
-References
-==========
-Script for TexturePacker (http://www.codeandweb.com/texturepacker) included!
-or use https://github.com/Bradshaw/Fudge
-
-more Infos here: http://love2d.org/forums/viewtopic.php?f=5&t=77918
-
-License
-==========
-This gametemplate is distributed under the zlib/libpng License (http://opensource.org/licenses/Zlib)
-
-All libraries used by this game_template are licensed under thier own licenses! 

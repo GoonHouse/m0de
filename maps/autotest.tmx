@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="compiled-dirt" tilewidth="16" tileheight="16">
+  <image source="../media/images/compiled-dirt.png" width="128" height="320"/>
+  <terraintypes>
+   <terrain name="Grass" tile="1"/>
+   <terrain name="Dirt" tile="11"/>
+   <terrain name="Air" tile="0"/>
+  </terraintypes>
+  <tile id="0" terrain="2,2,2,2"/>
+  <tile id="1" terrain="0,0,0,0"/>
+  <tile id="2" terrain="0,0,0,1"/>
+  <tile id="3" terrain="0,0,1,1"/>
+  <tile id="4" terrain="0,0,1,0"/>
+  <tile id="8" terrain="0,1,1,1"/>
+  <tile id="9" terrain="1,0,1,1"/>
+  <tile id="10" terrain="0,1,0,1"/>
+  <tile id="11" terrain="1,1,1,1"/>
+  <tile id="12" terrain="1,0,1,0"/>
+  <tile id="16" terrain="1,1,0,1"/>
+  <tile id="17" terrain="1,1,1,0"/>
+  <tile id="18" terrain="0,1,0,0"/>
+  <tile id="19" terrain="1,1,0,0"/>
+  <tile id="20" terrain="1,0,0,0"/>
+  <tile id="24" terrain="0,0,0,1"/>
+  <tile id="25" terrain="0,0,1,0"/>
+  <tile id="32" terrain="0,1,0,0"/>
+  <tile id="33" terrain="1,0,0,0"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+  </data>
+ </layer>
+</map>
